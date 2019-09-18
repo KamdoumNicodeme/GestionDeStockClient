@@ -1,10 +1,18 @@
 
     <h3 class="h3">Liste des produits</h3>
-    <ul class="list-group">
-        <li *ngFor ="let produit of produits" class="list-group-item" >
-            ref: {{produit.ref}}
-            quantite: {{produit.quantite}}
-            prix : {{produit.prixUnitaire}}
-        </li>
-    </ul>
-
+    <table class="table ">
+        <thead class="table-dark btn-info">
+        <tr >
+            <th scope="col">REFERENCE</th>
+            <th scope="col">QUANTITE</th>
+            <th scope="col">PRIX UNITAIRE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor ="let produit of produits">
+            <td>{{produit.ref}}</td>
+            <td>{{produit.quantite}}</td>
+            <td>{{produit.prixUnitaire}}</td>
+        </tr>
+        </tbody>
+    </table>
