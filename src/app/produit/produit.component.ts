@@ -11,19 +11,25 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 export class ProduitComponent implements OnInit {
 
   produits: Produit[];
+  operation = 'add';
+  selectedProduit: Produit;
 
   @Input()
   produitForm: FormGroup;
   constructor(private produitservice: ProduitService, private fb: FormBuilder) {
-    this.produitForm = this.fb.group({
-        ref: ['', Validators.required],
-        quantite: '',
-        prixUnitaire: ''
-    });
+    this.createForm();
   }
 
   ngOnInit() {
+    this.iniProduit();
     this.loadProduit();
+  }
+  createForm() {
+      this.produitForm = this.fb.group({
+          ref: ['', Validators.required],
+          quantite: '',
+          prixUnitaire: ''
+      });
   }
 
   loadProduit() {
@@ -35,5 +41,29 @@ export class ProduitComponent implements OnInit {
     );
 
   }
+    addProduit() {
+        const p = this.produitForm.value;
+        this.produitservice.addProduit(p).subscribe(
+            res => {
+              this.iniProduit();
+              this.loadProduit();
+            }
+        );
+    }
+
+    updateProduit() {
+      this.produitservice.updateProduit(this.selectedProduit)
+          .subscribe(
+              res =>  {
+                this.iniProduit();
+                this.loadProduit();
+              }
+          );
+    }
+
+    iniProduit() {
+    this.selectedProduit = new Produit();
+    this.createForm();
+    }
 
 }
